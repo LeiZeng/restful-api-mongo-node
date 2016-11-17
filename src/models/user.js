@@ -66,15 +66,6 @@ UserSchema.statics.findByName = function(username) {
   })
 }
 
-// UserSchema.statics.auth = function auth(username, password) {
-//   const model = this
-//
-//   return new Promise(function(resolve, reject) {
-//     return model.findByName(username)
-//       .then(user => (user.password === password ? resolve(user) : resolve(null)))
-//   })
-// }
-
 UserSchema.virtual('profile').get(function profile() {
   return { username: this.username }
 })
