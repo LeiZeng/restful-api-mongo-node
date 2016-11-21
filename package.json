@@ -5,13 +5,31 @@
   "license": "MIT",
   "scripts": {
     "post": "cp -R node_modules/swagger-restify/examples/example_v2.0/public/swagger dist/swagger",
-    "build": "babel -d dist src",
-    "start": "NODE_ENV=development nodemon index.js",
-    "deploy": "npm run build && node dist/index.js"
+    "build": "NODE_ENV=production babel -d dist src",
+    "start": "pm2-dev start index.js",
+    "deploy": "npm run build && node dist/index.js",
+    "test": "ava",
+    "cover": "nyc ava"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ],
+    "env": {
+      "development": {
+        "sourceMaps": "inline"
+      }
+    }
+  },
+  "ava": {
+    "require": [
+      "babel-core/register"
+    ]
   },
   "postinstall": "npm run post",
   "dependencies": {
     "bcrypt": "^0.8.7",
+    "bunyan": "^1.8.5",
     "client-sessions": "^0.7.0",
     "config": "^1.24.0",
     "mongoose": "^4.6.6",
@@ -31,9 +49,10 @@
     "bower": "^1.7.9",
     "eslint": "^3.8.1",
     "mongoose-migrate": "^0.2.4",
-    "nodemon": "^1.11.0",
     "nyc": "^9.0.1",
+    "pm2": "^2.1.5",
     "sinon": "^1.17.6",
+    "sinon-mongoose": "^1.3.0",
     "supertest": "^2.0.1"
   }
 }
